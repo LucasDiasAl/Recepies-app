@@ -492,7 +492,7 @@ describe("33 - Implemente a solução de forma que, ao clicar no botão de compa
   });
 });
 
-describe.only("34 - Salve as receitas favoritas no `localStorage` na chave `favoriteRecipes`", () => {
+describe("34 - Salve as receitas favoritas no `localStorage` na chave `favoriteRecipes`", () => {
   it("Verifica se após favoritar receita de uma comida, ela é salva corretamente no localStorage", () => {
     cy.visit("http://localhost:3000/meals/52771", {
       onBeforeLoad(win) {
