@@ -14,7 +14,7 @@ function Header({ title, perfilBool, searchBool, type, img }) {
   const [userImage, setUserImage] = useState('');
 
   useEffect(() => {
-    const user = localStorage.getItem('user');
+    const user = localStorage.getItem('user') || '{ "userImg": "https://www.gravatar.com/avatar/default" }';
     const json = JSON.parse(user).userImg;
     setUserImage(json);
     setUserImg(json);

@@ -21,9 +21,7 @@ export default function Review({ id }) {
     const get = localStorage.getItem('review');
     const parse = JSON.parse(get) || [];
     localStorage.setItem('review', JSON.stringify([...parse, review]));
-    console.log(rating, rateText);
     setShowRate(false);
-    console.log(parse);
   };
 
   const handleRateText = ({ target }) => {
@@ -48,10 +46,8 @@ export default function Review({ id }) {
   useEffect(() => {
     const get = localStorage.getItem('review');
     const parse = JSON.parse(get) || [];
-    console.log('aa', parse, 'id', id);
     if (parse.find((i) => i.id === id)) {
       setShowRate(false);
-      console.log('igual');
     }
   }, [id]);
 

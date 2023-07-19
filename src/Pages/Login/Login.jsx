@@ -22,7 +22,6 @@ function Login({ history }) {
   const GoogleLogin = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      console.log(result.user, 'done');
       const user = {
         email: result.user.email,
         userImg: result.user.photoURL,
@@ -50,15 +49,19 @@ function Login({ history }) {
   };
   const handleChange = (event) => {
     const { name, value } = event.target;
-    if (name === 'email') {
-      setEmail(value);
-    } if (name === 'password') {
-      setPassword(value);
-    }
     const MIN_LENGTH_PASS = 6;
     const regex = /\S+@\S+\.\S+/;
-    const verifyEmail = email && regex.test(email);
-    const verifyName = password.length >= MIN_LENGTH_PASS;
+    let verifyEmail = false;
+    let verifyName = false;
+    if (name === 'email') {
+      setEmail(value);
+      verifyEmail = value && regex.test(value);
+      verifyName = password.length >= MIN_LENGTH_PASS;
+    } if (name === 'password') {
+      setPassword(value);
+      verifyName = value.length >= MIN_LENGTH_PASS;
+      verifyEmail = email && regex.test(email);
+    }
     if (verifyEmail && verifyName) {
       setvalid(true);
     } else {
@@ -101,7 +104,7 @@ function Login({ history }) {
             required
             name="password"
             onChange={ handleChange }
-            value={ password }
+            defaultValue={ password }
           />
           <button
             className="Login__button"

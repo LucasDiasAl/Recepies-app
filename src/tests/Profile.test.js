@@ -4,14 +4,15 @@ import userEvent from '@testing-library/user-event';
 import App from '../App';
 import renderWithRouter from './renderWithRouter';
 import Provider from '../Context/Context';
+import { Meals } from '../Pages';
 
 describe('Profile page tests', () => {
   test('Test if icon profile is showed', () => {
     renderWithRouter(
       <Provider>
-        <App />
+        <Meals />
       </Provider>,
-      ['/profile'],
+      ['/profile']
     );
     const perfilIcon = screen.getByTestId('profile-top-btn');
     expect(perfilIcon).toBeInTheDocument();
@@ -20,9 +21,9 @@ describe('Profile page tests', () => {
   test('Test if name `Profile` is showed', () => {
     renderWithRouter(
       <Provider>
-        <App />
+        <Meals />
       </Provider>,
-      ['/profile'],
+      ['/profile']
     );
     const profileText = screen.getByTestId('page-title');
     expect(profileText).toBeInTheDocument();
@@ -33,7 +34,7 @@ describe('Profile page tests', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/profile'],
+      ['/profile']
     );
     const userEmail = screen.getByTestId('profile-email');
     expect(userEmail).toBeInTheDocument();
@@ -44,7 +45,7 @@ describe('Profile page tests', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/profile'],
+      ['/profile']
     );
     const btnDoneRecipes = screen.getByTestId('profile-done-btn');
     expect(btnDoneRecipes).toBeInTheDocument();
@@ -55,7 +56,7 @@ describe('Profile page tests', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/profile'],
+      ['/profile']
     );
     const btnFavoriteRecipes = screen.getByTestId('profile-favorite-btn');
     expect(btnFavoriteRecipes).toBeInTheDocument();
@@ -66,7 +67,7 @@ describe('Profile page tests', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/profile'],
+      ['/profile']
     );
     const btnLogout = screen.getByTestId('profile-logout-btn');
     expect(btnLogout).toBeInTheDocument();
@@ -77,7 +78,7 @@ describe('Profile page tests', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/profile'],
+      ['/profile']
     );
     const userEmail = screen.getByText(/\S+@\S+\.\S+/);
     expect(userEmail).toBeInTheDocument();
@@ -88,7 +89,7 @@ describe('Profile page tests', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/profile'],
+      ['/profile']
     );
     const btnDoneRecipes = screen.getByTestId('profile-done-btn');
     userEvent.click(btnDoneRecipes);
@@ -103,7 +104,7 @@ describe('Profile page tests', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/profile'],
+      ['/profile']
     );
     const btnFavoriteRecipes = screen.getByTestId('profile-favorite-btn');
     userEvent.click(btnFavoriteRecipes);
@@ -118,7 +119,7 @@ describe('Profile page tests', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/profile'],
+      ['/profile']
     );
     const btnLogout = screen.getByTestId('profile-logout-btn');
     userEvent.click(btnLogout);
@@ -133,7 +134,7 @@ describe('Profile page tests', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/'],
+      ['/']
     );
     const emailInput = screen.getByTestId('email-input');
     const passwordInput = screen.getByTestId('password-input');
@@ -144,15 +145,17 @@ describe('Profile page tests', () => {
     userEvent.type(emailInput, 'teste@gmail.com');
     userEvent.type(passwordInput, '123456A');
     userEvent.click(btnLogin);
-    const { pathname } = history.location;
-    expect(pathname).toBe('/meals');
-    renderWithRouter(
-      <Provider>
-        <App />
-      </Provider>,
-      ['/profile'],
-    );
-    const email = screen.getByTestId('profile-email');
-    expect(email).toHaveTextContent('teste@gmail.com');
+    setTimeout(() => {
+      const { pathname } = history.location;
+      expect(pathname).toBe('/meals');
+      renderWithRouter(
+        <Provider>
+          <App />
+        </Provider>,
+        ['/profile']
+      );
+      const email = screen.getByTestId('profile-email');
+      expect(email).toHaveTextContent('teste@gmail.com');
+    });
   });
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Meals } from '../Pages';
+import { DoneRecipes, Drinks, Meals } from '../Pages';
 import renderWithRouter from './renderWithRouter';
 import Provider from '../Context/Context';
 
@@ -9,7 +9,7 @@ describe('Footer component tests', () => {
   test('Test if footer component and icons are rendered', () => {
     renderWithRouter(
       <Provider>
-        <Meals />
+        <DoneRecipes />
       </Provider>,
     );
     const mealsIcon = screen.getByTestId('meals-bottom-btn');
@@ -22,7 +22,7 @@ describe('Footer component tests', () => {
   test('Test if route is changed when click on link `Meals`', () => {
     const { history } = renderWithRouter(
       <Provider>
-        <Meals />
+        <Drinks />
       </Provider>,
     );
     const mealsIcon = screen.getByTestId('meals-bottom-btn');

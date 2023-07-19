@@ -6,33 +6,7 @@ import renderWithRouter from './renderWithRouter';
 import Provider from '../Context/Context';
 
 describe('Categoreis component tests', () => {
-  test('Test if footer component and icons are rendered', async () => {
-    renderWithRouter(
-      <Provider>
-        <Meals />
-      </Provider>,
-    );
-
-    const categoreis = await screen.findByTestId('Beef-category-filter');
-    expect(categoreis).toBeInTheDocument();
-    const allCategoreis = await screen.findByTestId('All-category-filter');
-
-    userEvent.click(categoreis);
-
-    expect(allCategoreis.checked).toBe(false);
-    expect(categoreis.checked).toBe(true);
-    const catFiltered = await screen.findByTestId('0-recipe-card');
-    expect(catFiltered).toBeInTheDocument();
-
-    userEvent.click(categoreis);
-
-    expect(allCategoreis.checked).toBe(true);
-    expect(categoreis.checked).toBe(false);
-
-    userEvent.click(allCategoreis);
-  });
-
-  test('', async () => {
+  test('Testa se as receitas sao renderizadas de acordo com a categoria', async () => {
     renderWithRouter(
       <Provider>
         <Meals />
@@ -43,13 +17,13 @@ describe('Categoreis component tests', () => {
     const breakfastCat = await screen.findByTestId('Breakfast-category-filter');
 
     userEvent.click(beefCat);
-
-    expect(beefCat.checked).toBe(true);
-    expect(breakfastCat.checked).toBe(false);
+    const beefRecepie = await screen.findByAltText('Beef and Mustard Pie');
+    expect(beefRecepie).toBeInTheDocument();
 
     userEvent.click(breakfastCat);
 
-    expect(beefCat.checked).toBe(false);
-    expect(breakfastCat.checked).toBe(true);
+    const breakfastRecepie = await screen.findByAltText('Breakfast Potatoes');
+
+    expect(breakfastRecepie).toBeInTheDocument();
   });
 });

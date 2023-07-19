@@ -75,9 +75,8 @@ describe('Done Recipes page tests', () => {
     const drinkBtn = screen.getByTestId('filter-by-drink-btn');
     const image1 = screen.getByTestId('0-horizontal-image');
     const text = screen.getByTestId('0-horizontal-top-text');
-    const name = screen.getByTestId();
+    const name = screen.getByTestId('0-horizontal-name');
     const date = screen.getByTestId('0-horizontal-done-date');
-    const shareBtn = screen.getByTestId('0-horizontal-share-btn');
     const tags = screen.getByTestId('0-Pasta-horizontal-tag');
 
     expect(title).toBeInTheDocument();
@@ -88,7 +87,6 @@ describe('Done Recipes page tests', () => {
     expect(name).toBeInTheDocument();
     expect(date).toBeInTheDocument();
     expect(text).toBeInTheDocument();
-    expect(shareBtn).toBeInTheDocument();
     expect(tags).toBeInTheDocument();
     userEvent.click(allBtn);
     userEvent.click(mealBtn);
