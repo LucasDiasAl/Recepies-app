@@ -24,6 +24,11 @@ git clone git@github.com:LucasDiasAl/Recepies-app.git
 ```
 npm install
 ```
+>Crie um arquivo .env na raiz do projeto e escolha uma senha para a criptografia
+```
+//.env
+REACT_APP_CRIPTO_KEY='SUA_CHAVE'
+```
 >Inicie o site com o comando:
 ```
 npm start
