@@ -8,6 +8,10 @@ import {
   GoogleAuthProvider,
 } from 'firebase/auth';
 
+// import dotenv from 'dotenv';
+// dotenv.config();
+
+import CryptoJS from 'crypto-js';
 import { auth } from '../../utils/firebase';
 import logo from '../../images/bgT.png';
 import { Context } from '../../Context/Context';
@@ -49,18 +53,21 @@ function Login({ history }) {
   };
   const handleChange = (event) => {
     const { name, value } = event.target;
+    const criptoKey = process.env.REACT_APP_CRIPTO_KEY || 'DefaultKey'
+    console.log(criptoKey)
     const MIN_LENGTH_PASS = 6;
     const regex = /\S+@\S+\.\S+/;
     let verifyEmail = false;
     let verifyName = false;
     if (name === 'email') {
-      setEmail(value);
       verifyEmail = value && regex.test(value);
       verifyName = password.length >= MIN_LENGTH_PASS;
+      setEmail(value);
     } if (name === 'password') {
-      setPassword(value);
       verifyName = value.length >= MIN_LENGTH_PASS;
       verifyEmail = email && regex.test(email);
+      const encripted = CryptoJS.AES.encrypt(value, criptoKey).toString()
+      setPassword(encripted);
     }
     if (verifyEmail && verifyName) {
       setvalid(true);
