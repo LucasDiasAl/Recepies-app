@@ -2,10 +2,10 @@ import PropTypes from 'prop-types';
 import 'swiper/swiper-bundle.min.css';
 import 'swiper/swiper.min.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Carousel({ loading, recomendation, recomendationP, keys }) {
-  const history = useHistory();
+  const history = useNavigate();
   const handleRecomendationClick = (id) => {
     // Use o método push para navegar para uma nova rota
     history.push(`/${recomendationP}s/${id}`.toLowerCase());
