@@ -13,9 +13,9 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
 * Usar a versão do node 16x
 
-## 🚀 Instalando <nome_do_projeto>
+## 🚀 Instalando Recepies-app
 
-Para instalar e usar o <Recepies-app>, siga estas etapas:
+Para instalar e usar o Recepies-app, siga estas etapas:
 > Clone o repositório:
 ```
 git clone git@github.com:LucasDiasAl/Recepies-app.git
