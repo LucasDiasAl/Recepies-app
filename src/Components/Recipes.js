@@ -1,13 +1,16 @@
 import { useEffect, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 
+import { useNavigate } from 'react-router-dom';
 import { Context } from '../Context/Context';
 
-function Recipes({ history, page }) {
+function Recipes({ page }) {
   const LIMIT_ELEMENTS = 12;
   const { dataApi, handleCallApi, categorySearch } = useContext(Context);
 
   const [produtos, setProdutos] = useState([]);
+
+  const navigate = useNavigate();
 
   const key = page === 'meals' ? 'Meal' : 'Drink';
 
@@ -20,12 +23,12 @@ function Recipes({ history, page }) {
     const value = products === null || products === undefined ? [] : products;
     if (value.length === 1 && !categorySearch) {
       const idProduto = products[0][`id${key}`];
-      history.push(`/${page}/${idProduto}`);
+      navigate(`/${page}/${idProduto}`);
     } else {
       const newValue = value.slice(0, LIMIT_ELEMENTS);
       setProdutos(newValue);
     }
-  }, [dataApi, history, page, categorySearch, key]);
+  }, [dataApi, page, categorySearch, key, navigate]);
   return (
     <div data-testid="Recipe__container-cards" className="Page__cards">
       {produtos.map((curr, index) => (
@@ -40,7 +43,7 @@ function Recipes({ history, page }) {
           className="Recipe__card-info"
           data-testid={ `${index}-recipe-card` }
           key={ curr[`id${key}`] }
-          onClick={ () => history.push(`/${page}/${curr[`id${key}`]}`) }
+          onClick={ () => navigate(`/${page}/${curr[`id${key}`]}`) }
         >
           <div className="Recipe-container-item">
             <img
@@ -61,9 +64,6 @@ function Recipes({ history, page }) {
 }
 
 Recipes.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }),
   page: PropTypes.string,
 }.isRequired;
 

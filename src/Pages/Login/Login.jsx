@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import PropTypes from 'prop-types';
 import './Login.css';
 import { FcGoogle } from '@react-icons/all-files/fc/FcGoogle';
 import md5 from 'crypto-js/md5';
@@ -8,19 +7,20 @@ import {
   GoogleAuthProvider,
 } from 'firebase/auth';
 
-// import dotenv from 'dotenv';
-// dotenv.config();
+import { useNavigate } from 'react-router-dom';
 
 import CryptoJS from 'crypto-js';
 import { auth } from '../../utils/firebase';
 import logo from '../../images/bgT.png';
 import { Context } from '../../Context/Context';
 
-function Login({ history }) {
+function Login() {
   const { setUserImg } = useContext(Context);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [valid, setvalid] = useState(false);
+
+  const navigate = useNavigate();
 
   const googleProvider = new GoogleAuthProvider();
   const GoogleLogin = async () => {
@@ -32,7 +32,7 @@ function Login({ history }) {
       };
       localStorage.setItem('user', JSON.stringify((user)));
       setUserImg(result.user.photoURL);
-      history.push('/meals');
+      navigate('/meals');
     } catch (error) {
       console.log(error);
     }
@@ -49,7 +49,7 @@ function Login({ history }) {
       userImg: url,
     };
     localStorage.setItem('user', JSON.stringify((user)));
-    history.push('/meals');
+    navigate('/meals');
   };
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -134,9 +134,4 @@ function Login({ history }) {
     </div>
   );
 }
-Login.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }),
-}.isRequired;
 export default Login;

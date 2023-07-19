@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import './RecipeDetails.css';
 import {
   FacebookShareButton,
@@ -15,7 +15,7 @@ import Carousel from './Carousel';
 import { Context } from '../../Context/Context';
 import ShowReview from '../Review/showReview/ShowReview';
 
-function RecipeDetails({ page, notPages, history }) {
+function RecipeDetails({ page, notPages }) {
   const [recomendation, setrecomendation] = useState([]);
   const [loading, setloading] = useState(false);
   const [keys, setKey] = useState('');
@@ -24,6 +24,8 @@ function RecipeDetails({ page, notPages, history }) {
   const { id } = useParams();
   const { handleCallApi, dataApi,
     ItemIngridients, Item, fetchItem } = useContext(Context);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (recomendation.length === 0) {
@@ -86,7 +88,7 @@ function RecipeDetails({ page, notPages, history }) {
         type="button"
         className="btn-start-recepie"
         data-testid="start-recipe-btn"
-        onClick={ () => history.push(`/${page}/${id}/in-progress`) }
+        onClick={ () => navigate(`/${page}/${id}/in-progress`) }
       >
         Start Recipe
       </button>

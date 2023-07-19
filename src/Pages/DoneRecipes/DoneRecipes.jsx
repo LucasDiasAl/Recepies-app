@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 import {
   FacebookShareButton,
   WhatsappShareButton,
@@ -11,10 +12,11 @@ import './DoneRecipes.css';
 import Footer from '../../Components/Footer/Footer';
 import Review from '../../Components/Review/setReview/Review';
 
-function DoneRecipes({ history }) {
+function DoneRecipes() {
   const [done, setDone] = useState([]);
   const [pureData, setPureData] = useState([]);
 
+  const navigate = useNavigate();
   const handleAll = () => {
     setDone(pureData);
   };
@@ -104,7 +106,7 @@ function DoneRecipes({ history }) {
                         role="button"
                         tabIndex="0"
                         onKeyPress={ () => {} }
-                        onClick={ () => history.push(`/${recipe.type}s/${recipe.id}`) }
+                        onClick={ () => navigate(`/${recipe.type}s/${recipe.id}`) }
                       >
                         <div className="DoneRecipe__Img">
                           <img
@@ -136,7 +138,7 @@ function DoneRecipes({ history }) {
                           role="button"
                           tabIndex="0"
                           onKeyPress={ () => {} }
-                          onClick={ () => history.push(`/${recipe.type}s/${recipe.id}`) }
+                          onClick={ () => navigate(`/${recipe.type}s/${recipe.id}`) }
                         >
                           <h2
                             data-testid={ `${index}-horizontal-name` }
@@ -199,9 +201,6 @@ function DoneRecipes({ history }) {
   );
 }
 DoneRecipes.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }),
   page: PropTypes.string,
 }.isRequired;
 export default DoneRecipes;

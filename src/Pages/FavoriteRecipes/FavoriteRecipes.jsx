@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 import {
   FacebookShareButton,
   WhatsappShareButton,
@@ -11,9 +12,11 @@ import blackHeart from '../../images/blackHeartIcon.svg';
 import './FavoriteRecipes.css';
 import Footer from '../../Components/Footer/Footer';
 
-function FavoriteRecipes({ history }) {
+function FavoriteRecipes() {
   const [done, setDone] = useState([]);
   const [pureData, setpureData] = useState([]);
+
+  const navigate = useNavigate();
 
   const handleRemove = ({ target }) => {
     const idAlvo = target.name;
@@ -105,7 +108,7 @@ function FavoriteRecipes({ history }) {
                         role="button"
                         tabIndex="0"
                         onKeyPress={ () => {} }
-                        onClick={ () => history.push(`/${recipe.type}s/${recipe.id}`) }
+                        onClick={ () => navigate(`/${recipe.type}s/${recipe.id}`) }
                       >
                         <div className="FavoriteRecipes__Img">
                           <img
@@ -137,7 +140,7 @@ function FavoriteRecipes({ history }) {
                           role="button"
                           tabIndex="0"
                           onKeyPress={ () => {} }
-                          onClick={ () => history.push(`/${recipe.type}s/${recipe.id}`) }
+                          onClick={ () => navigate(`/${recipe.type}s/${recipe.id}`) }
                         >
                           <h2
                             data-testid={ `${index}-horizontal-name` }
@@ -201,9 +204,6 @@ function FavoriteRecipes({ history }) {
   );
 }
 FavoriteRecipes.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }),
   page: PropTypes.string,
 }.isRequired;
 export default FavoriteRecipes;

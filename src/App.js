@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Route, BrowserRouter as Router } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import AOS from 'aos';
 import {
   Login,
@@ -19,18 +19,19 @@ import 'aos/dist/aos.css'; // You can also use <link> for styles
 function App() {
   AOS.init();
   return (
-    <Router>
-      <Route exact path="/" component={ Login } />
-      <Route exact path="/meals" component={ Meals } />
-      <Route exact path="/meals/:id" component={ DetailsMeals } />
-      <Route exact path="/meals/:id/in-progress" component={ RecipeMeals } />
-      <Route exact path="/drinks" component={ Drinks } />
-      <Route exact path="/drinks/:id" component={ DetailsDrinks } />
-      <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
-      <Route exact path="/drinks/:id/in-progress" component={ RecipeDrinks } />
-      <Route exact path="/done-recipes" component={ DoneRecipes } />
-      <Route exact path="/profile" component={ Profile } />
-    </Router>
+    <Routes>
+      <Route exact path="/" element={ <Login /> } />
+      <Route exact path="/meals" element={ <Meals /> } />
+      <Route exact path="/meals/:id" element={ <DetailsMeals /> } />
+      <Route exact path="/meals/:id/in-progress" element={ <RecipeMeals /> } />
+      <Route exact path="/drinks" element={ <Drinks /> } />
+      <Route exact path="/drinks/:id" element={ <DetailsDrinks /> } />
+      <Route exact path="/favorite-recipes" element={ <FavoriteRecipes /> } />
+      <Route exact path="/drinks/:id/in-progress" element={ <RecipeDrinks /> } />
+      <Route exact path="/done-recipes" element={ <DoneRecipes /> } />
+      <Route exact path="/profile" element={ <Profile /> } />
+    </Routes>
+
   );
 }
 export default App;

@@ -26,7 +26,6 @@ describe('Login page tests', () => {
     });
     setTimeout(() => {
       const { pathname } = history.location;
-      console.log(history);
       expect(pathname).toBe('/meals');
     }, 100);
   });

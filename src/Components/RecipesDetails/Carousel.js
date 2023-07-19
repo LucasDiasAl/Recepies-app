@@ -5,10 +5,10 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { useNavigate } from 'react-router-dom';
 
 function Carousel({ loading, recomendation, recomendationP, keys }) {
-  const history = useNavigate();
+  const navigate = useNavigate();
   const handleRecomendationClick = (id) => {
     // Use o método push para navegar para uma nova rota
-    history.push(`/${recomendationP}s/${id}`.toLowerCase());
+    navigate(`/${recomendationP}s/${id}`.toLowerCase());
   };
   return (
     <section className="carousel">

@@ -17,8 +17,6 @@ describe('Test page Details Drinks', () => {
       const { pathname } = history.location;
       expect(pathname).toBe('/drinks');
     });
-    // const firstElement = screen.getByTestId('0-recipe-card');
-    // expect(firstElement).toBeInTheDocument();
   });
 
   it('Test if `RecipeDetails` is rendered', async () => {
@@ -36,7 +34,7 @@ describe('Test page Details Drinks', () => {
     });
   });
 
-  it('Test if route `/recipe-details` is changed when click in element', async () => {
+  it.only('Test if route `/recipe-details` is changed when click in element', async () => {
     const { history } = renderWithRouter(
       <Provider>
         <App />

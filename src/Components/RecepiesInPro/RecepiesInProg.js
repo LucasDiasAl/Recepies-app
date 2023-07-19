@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
   FacebookShareButton,
   WhatsappShareButton,
@@ -11,11 +11,13 @@ import RecipesCard from '../RecipesDetails/RecipesCard';
 import { Context } from '../../Context/Context';
 import './recepiesInProg.css';
 
-function RecipesInProg({ page, pages, history }) {
+function RecipesInProg({ page, pages }) {
   const [checkeds, setCheckeds] = useState([]);
 
   const { fetchItem, ItemIngridients, Item } = useContext(Context);
   const { id } = useParams();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const inProg = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
@@ -81,7 +83,7 @@ function RecipesInProg({ page, pages, history }) {
     };
     const oldDone = JSON.parse(localStorage.getItem('doneRecipes')) || [];
     localStorage.setItem('doneRecipes', JSON.stringify([...oldDone, Done]));
-    history.push('/done-recipes');
+    navigate('/done-recipes');
   };
 
   return (

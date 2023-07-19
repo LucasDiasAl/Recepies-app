@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-import PropTypes from 'prop-types';
 import './Profile.css';
+import { useNavigate } from 'react-router-dom';
 import { AiFillHeart } from '@react-icons/all-files/ai/AiFillHeart';
 import { AiFillCheckCircle } from '@react-icons/all-files/ai/AiFillCheckCircle';
 import { AiOutlineLogout } from '@react-icons/all-files/ai/AiOutlineLogout';
@@ -9,10 +9,12 @@ import { getAuth, signOut } from 'firebase/auth';
 import { Context } from '../../Context/Context';
 // import { auth } from '../../utils/firebase';
 
-function Profile({ history }) {
+function Profile() {
   const [email, setEmail] = useState('email');
   const { userImg, setUserImg } = useContext(Context);
   const [userImage, setUserImage] = useState('');
+
+  const navigate = useNavigate();
 
   const deleteUserLocalStorage = () => {
     // localStorage.clear();
@@ -64,7 +66,7 @@ function Profile({ history }) {
             color="green "
             data-testid="profile-done-btn"
             className="Profile-icons"
-            onClick={ () => history.push('/done-recipes') }
+            onClick={ () => navigate('/done-recipes') }
           />
           <h3>
             Favorite Recipes
@@ -74,7 +76,7 @@ function Profile({ history }) {
             color="crimson "
             data-testid="profile-favorite-btn"
             className="Profile-icons"
-            onClick={ () => history.push('/favorite-recipes') }
+            onClick={ () => navigate('/favorite-recipes') }
           />
           <h3>
             Logout
@@ -89,11 +91,11 @@ function Profile({ history }) {
               deleteUserLocalStorage();
               const authU = getAuth();
               signOut(authU).then(() => {
-                history.push('/');
+                navigate('/');
               }).catch((error) => {
                 console.log(error);
               });
-              history.push('/');
+              navigate('/');
             } }
           />
         </form>
@@ -101,11 +103,5 @@ function Profile({ history }) {
     </div>
   );
 }
-
-Profile.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }),
-}.isRequired;
 
 export default Profile;
