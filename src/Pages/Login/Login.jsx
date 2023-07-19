@@ -53,8 +53,7 @@ function Login({ history }) {
   };
   const handleChange = (event) => {
     const { name, value } = event.target;
-    const criptoKey = process.env.REACT_APP_CRIPTO_KEY || 'DefaultKey'
-    console.log(criptoKey)
+    const criptoKey = process.env.REACT_APP_CRIPTO_KEY || 'DefaultKey';
     const MIN_LENGTH_PASS = 6;
     const regex = /\S+@\S+\.\S+/;
     let verifyEmail = false;
@@ -66,7 +65,7 @@ function Login({ history }) {
     } if (name === 'password') {
       verifyName = value.length >= MIN_LENGTH_PASS;
       verifyEmail = email && regex.test(email);
-      const encripted = CryptoJS.AES.encrypt(value, criptoKey).toString()
+      const encripted = CryptoJS.AES.encrypt(value, criptoKey).toString();
       setPassword(encripted);
     }
     if (verifyEmail && verifyName) {
