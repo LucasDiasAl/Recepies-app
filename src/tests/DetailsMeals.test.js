@@ -11,7 +11,7 @@ describe('Test page Details Drinks', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/meals'],
+      ['/meals']
     );
     await waitFor(() => {
       const { pathname } = history.location;
@@ -26,14 +26,14 @@ describe('Test page Details Drinks', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/meals'],
+      ['/meals']
     );
     await waitFor(() => {
       const { pathname } = history.location;
       expect(pathname).toBe('/meals');
       const firstElement = screen.getByTestId('0-recipe-card');
       expect(firstElement).toBeInTheDocument();
-    });
+    }, 100);
   });
 
   it('Test if route `/recipe-details` is changed when click in element', async () => {
@@ -41,7 +41,7 @@ describe('Test page Details Drinks', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/meals'],
+      ['/meals']
     );
     const firstElement = await screen.findByTestId('0-recipe-card');
     userEvent.click(firstElement);

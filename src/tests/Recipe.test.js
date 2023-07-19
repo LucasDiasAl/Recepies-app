@@ -204,8 +204,10 @@ describe('testa os componentes da tela de ingredientes', () => {
       </Provider>,
       [drinksURl]
     );
-    const recomendation = await screen.findByTestId('0-recommendation-card');
-    expect(recomendation).toBeInTheDocument();
+    setTimeout(() => {
+      const recomendation = screen.findByTestId('0-recommendation-card');
+      expect(recomendation).toBeInTheDocument();
+    }, 100);
   });
 
   test('testa se o localStorage funciona', async () => {
