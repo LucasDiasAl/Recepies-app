@@ -27,7 +27,7 @@ function RecipesInProg({ page, pages, history }) {
         checkbox.parentNode.classList.add('checado');
       });
     }
-  }, [ItemIngridients]);
+  }, [ItemIngridients, id]);
 
   useEffect(() => {
     fetchItem(page, id);
@@ -36,14 +36,16 @@ function RecipesInProg({ page, pages, history }) {
   useEffect(() => {
     if (ItemIngridients.length > 0) {
       const inProgress = JSON.parse(localStorage.getItem('inProgressRecipes')) || {};
-      const ObjInProg = [...Object.entries(inProgress).filter(([key]) => key !== id),
-        [id, checkeds]];
+      const ObjInProg = [
+        ...Object.entries(inProgress).filter(([key]) => key !== id),
+        [id, checkeds],
+      ];
       localStorage.setItem(
         'inProgressRecipes',
         JSON.stringify(Object.fromEntries(ObjInProg)),
       );
     }
-  }, [checkeds]);
+  }, [checkeds, ItemIngridients, id]);
 
   const handleCheck = ({ target }) => {
     const label = target.parentNode;
@@ -85,27 +87,23 @@ function RecipesInProg({ page, pages, history }) {
   return (
     <div className="InProgress">
       <h1 className="Recipe__InProgress-title">Recipe In Progress</h1>
-      <RecipesCard Item={ Item } pages={ pages } page={ page } className="card-test" />
-      <section
-        className="InProgress__instructions"
-        data-testid="instructions"
-      >
-        {
-          ItemIngridients.map(([ingredient, value], index) => (
-            <label
-              htmlFor={ ingredient[1] }
-              key={ index }
-              data-testid={ `${index}-ingredient-step` }
-            >
-              {`${ingredient[1]}${value[1]}`}
-              <input
-                type="checkbox"
-                id={ ingredient[1] }
-                onClick={ handleCheck }
-              />
-            </label>
-          ))
-        }
+      <RecipesCard
+        Item={ Item }
+        pages={ pages }
+        page={ page }
+        className="card-test"
+      />
+      <section className="InProgress__instructions" data-testid="instructions">
+        {ItemIngridients.map(([ingredient, value], index) => (
+          <label
+            htmlFor={ ingredient[1] }
+            key={ index }
+            data-testid={ `${index}-ingredient-step` }
+          >
+            {`${ingredient[1]}${value[1]}`}
+            <input type="checkbox" id={ ingredient[1] } onClick={ handleCheck } />
+          </label>
+        ))}
       </section>
       <div className="social-btn">
         <FacebookShareButton

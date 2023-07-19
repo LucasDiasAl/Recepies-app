@@ -4,7 +4,6 @@ import userEvent from '@testing-library/user-event';
 import App from '../App';
 import renderWithRouter from './renderWithRouter';
 import Provider from '../Context/Context';
-import { Meals } from '../Pages';
 
 const startRecipe = 'start-recipe-btn';
 const drinksURl = '/drinks/15997';
@@ -17,7 +16,7 @@ describe('RecipeDetails page tests', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/meals']
+      ['/meals'],
     );
     const searchBtn = screen.getByTestId('search-top-btn');
     userEvent.click(searchBtn);
@@ -39,12 +38,12 @@ describe('RecipeDetails page tests', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/meals']
+      ['/meals'],
     );
     const firstElement = await screen.findByTestId(
       '0-recipe-card',
       {},
-      { timeout: 4000 }
+      { timeout: 4000 },
     );
     expect(firstElement).toBeInTheDocument();
 
@@ -59,12 +58,12 @@ describe('RecipeDetails page tests', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/drinks']
+      ['/drinks'],
     );
     const divDrinks = await screen.findByTestId(
       'Recipe__container-cards',
       {},
-      { timeout: 4000 }
+      { timeout: 4000 },
     );
     expect(divDrinks).toBeInTheDocument();
   });
@@ -74,12 +73,12 @@ describe('RecipeDetails page tests', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/meals']
+      ['/meals'],
     );
     const divMeals = await screen.findByTestId(
       'Recipe__container-cards',
       {},
-      { timeout: 4000 }
+      { timeout: 4000 },
     );
     expect(divMeals).toBeInTheDocument();
   });
@@ -90,7 +89,7 @@ test('Test if only 1 elment send to right page id', async () => {
     <Provider>
       <App />
     </Provider>,
-    ['/drinks']
+    ['/drinks'],
   );
   const searchBtn = screen.getByTestId(searchButton);
   userEvent.click(searchBtn);
@@ -115,7 +114,7 @@ test('Test if sends to in pogress', async () => {
     <Provider>
       <App />
     </Provider>,
-    [drinksURl]
+    [drinksURl],
   );
   const start = screen.getByTestId(startRecipe);
   userEvent.click(start);
@@ -130,7 +129,7 @@ test('Test if sends to in pogress', async () => {
     <Provider>
       <App />
     </Provider>,
-    ['/meals/52977']
+    ['/meals/52977'],
   );
   const start = screen.getByTestId(startRecipe);
   userEvent.click(start);
@@ -146,7 +145,7 @@ describe('testa os componentes da tela de ingredientes', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/drinks']
+      ['/drinks'],
     );
     const firstElement = await screen.findByTestId('0-recipe-card');
     expect(firstElement).toBeInTheDocument();
@@ -157,7 +156,7 @@ describe('testa os componentes da tela de ingredientes', () => {
       expect(pathname).toBe(drinksURl);
     });
     const instruction = await screen.findByTestId(
-      '0-ingredient-name-and-measure'
+      '0-ingredient-name-and-measure',
     );
     expect(instruction).toBeInTheDocument();
 
@@ -185,7 +184,7 @@ describe('testa os componentes da tela de ingredientes', () => {
       <Provider>
         <App />
       </Provider>,
-      [drinksURl]
+      [drinksURl],
     );
     const iniciarBtn = await screen.findByTestId(startRecipe);
     expect(iniciarBtn).toBeInTheDocument();
@@ -202,7 +201,7 @@ describe('testa os componentes da tela de ingredientes', () => {
       <Provider>
         <App />
       </Provider>,
-      [drinksURl]
+      [drinksURl],
     );
     setTimeout(() => {
       const recomendation = screen.findByTestId('0-recommendation-card');
@@ -215,7 +214,7 @@ describe('testa os componentes da tela de ingredientes', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/meals/52771']
+      ['/meals/52771'],
     );
     localStorage.clear();
     const favoriteBtn = await screen.findByTestId('favorite-btn');
@@ -231,7 +230,7 @@ describe('testa os componentes da tela de ingredientes', () => {
     // }];
     await waitFor(() => {
       const getLocalStorage = JSON.parse(
-        localStorage.getItem('favoriteRecipes')
+        localStorage.getItem('favoriteRecipes'),
       );
       expect(favoriteBtn).toBeInTheDocument();
       expect(getLocalStorage.length).toBe(1);

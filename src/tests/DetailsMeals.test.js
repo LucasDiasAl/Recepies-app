@@ -11,7 +11,7 @@ describe('Test page Details Drinks', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/meals']
+      ['/meals'],
     );
     await waitFor(() => {
       const { pathname } = history.location;
@@ -26,7 +26,7 @@ describe('Test page Details Drinks', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/meals']
+      ['/meals'],
     );
     await waitFor(() => {
       const { pathname } = history.location;
@@ -41,7 +41,7 @@ describe('Test page Details Drinks', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/meals']
+      ['/meals'],
     );
     const firstElement = await screen.findByTestId('0-recipe-card');
     userEvent.click(firstElement);

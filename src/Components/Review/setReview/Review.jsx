@@ -38,6 +38,8 @@ export default function Review({ id }) {
     setRating(number);
     if (number > 0 && rateText.length > MINIMAL_LENGTH) {
       setIsBtnDisabled(false);
+    } else {
+      setIsBtnDisabled(true);
     }
   };
   const enableEditReview = () => {
@@ -66,6 +68,7 @@ export default function Review({ id }) {
                 </h1>
                 <div className="starReview">
                   <Rating
+                    iconsCount={ 5 }
                     onClick={ handleRating }
                   />
                 </div>

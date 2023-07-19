@@ -12,7 +12,7 @@ describe('Profile page tests', () => {
       <Provider>
         <Meals />
       </Provider>,
-      ['/profile']
+      ['/profile'],
     );
     const perfilIcon = screen.getByTestId('profile-top-btn');
     expect(perfilIcon).toBeInTheDocument();
@@ -23,7 +23,7 @@ describe('Profile page tests', () => {
       <Provider>
         <Meals />
       </Provider>,
-      ['/profile']
+      ['/profile'],
     );
     const profileText = screen.getByTestId('page-title');
     expect(profileText).toBeInTheDocument();
@@ -34,7 +34,7 @@ describe('Profile page tests', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/profile']
+      ['/profile'],
     );
     const userEmail = screen.getByTestId('profile-email');
     expect(userEmail).toBeInTheDocument();
@@ -45,7 +45,7 @@ describe('Profile page tests', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/profile']
+      ['/profile'],
     );
     const btnDoneRecipes = screen.getByTestId('profile-done-btn');
     expect(btnDoneRecipes).toBeInTheDocument();
@@ -56,7 +56,7 @@ describe('Profile page tests', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/profile']
+      ['/profile'],
     );
     const btnFavoriteRecipes = screen.getByTestId('profile-favorite-btn');
     expect(btnFavoriteRecipes).toBeInTheDocument();
@@ -67,7 +67,7 @@ describe('Profile page tests', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/profile']
+      ['/profile'],
     );
     const btnLogout = screen.getByTestId('profile-logout-btn');
     expect(btnLogout).toBeInTheDocument();
@@ -78,7 +78,7 @@ describe('Profile page tests', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/profile']
+      ['/profile'],
     );
     const userEmail = screen.getByText(/\S+@\S+\.\S+/);
     expect(userEmail).toBeInTheDocument();
@@ -89,7 +89,7 @@ describe('Profile page tests', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/profile']
+      ['/profile'],
     );
     const btnDoneRecipes = screen.getByTestId('profile-done-btn');
     userEvent.click(btnDoneRecipes);
@@ -104,7 +104,7 @@ describe('Profile page tests', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/profile']
+      ['/profile'],
     );
     const btnFavoriteRecipes = screen.getByTestId('profile-favorite-btn');
     userEvent.click(btnFavoriteRecipes);
@@ -119,7 +119,7 @@ describe('Profile page tests', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/profile']
+      ['/profile'],
     );
     const btnLogout = screen.getByTestId('profile-logout-btn');
     userEvent.click(btnLogout);
@@ -134,7 +134,7 @@ describe('Profile page tests', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/']
+      ['/'],
     );
     const emailInput = screen.getByTestId('email-input');
     const passwordInput = screen.getByTestId('password-input');
@@ -152,7 +152,7 @@ describe('Profile page tests', () => {
         <Provider>
           <App />
         </Provider>,
-        ['/profile']
+        ['/profile'],
       );
       const email = screen.getByTestId('profile-email');
       expect(email).toHaveTextContent('teste@gmail.com');

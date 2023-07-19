@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import {
   FacebookShareButton,
@@ -14,7 +14,6 @@ import Footer from '../../Components/Footer/Footer';
 function FavoriteRecipes({ history }) {
   const [done, setDone] = useState([]);
   const [pureData, setpureData] = useState([]);
-  const [haveData, setHaveData] = useState(false);
 
   const handleRemove = ({ target }) => {
     const idAlvo = target.name;
@@ -24,22 +23,7 @@ function FavoriteRecipes({ history }) {
     setpureData(newFavorites);
     setDone(newFavorites);
   };
-  const checkLoad = () => {
-    if (done !== []) {
-      setHaveData(true);
-    }
-  };
-  const getLocalStorage = () => {
-    const data = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    if (data === null || undefined) {
-      setDone([]);
-      setpureData([]);
-    } else {
-      setDone(data);
-      setpureData(data);
-    }
-    checkLoad();
-  };
+
   const handleAll = () => {
     setDone(pureData);
   };
@@ -53,20 +37,27 @@ function FavoriteRecipes({ history }) {
     setDone(filterMeal);
   };
   useEffect(() => {
+    const getLocalStorage = () => {
+      const data = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      if (data === null || undefined) {
+        setDone([]);
+        setpureData([]);
+      } else {
+        setDone(data);
+        setpureData(data);
+      }
+    };
     getLocalStorage();
-    checkLoad();
   }, []);
 
-  useEffect(() => {
-    checkLoad();
-  }, [haveData, setpureData]);
+  const haveData = useMemo(() => done.length !== 0, [done]);
 
   return (
     <div className="FavoriteRecipes">
       <Header title="Favorite Recipes" perfilBool img />
       {
         !haveData
-          ? <h1>Não tem receita pronta</h1>
+          ? <h1 style={ { textAlign: 'center' } }>Não tem receita favorita</h1>
           : (
             <form className="FavoriteRecipes__container">
               <div className="FavoriteRecipes__filter">

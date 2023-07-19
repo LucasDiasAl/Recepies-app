@@ -14,17 +14,6 @@ function Profile({ history }) {
   const { userImg, setUserImg } = useContext(Context);
   const [userImage, setUserImage] = useState('');
 
-  const getEmailLocalStorage = () => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (user === null) {
-      setEmail('user@email.com');
-    } else {
-      setEmail(user.email);
-      setUserImage(user.userImg);
-      setUserImg(user.userImg);
-    }
-  };
-
   const deleteUserLocalStorage = () => {
     // localStorage.clear();
     localStorage.removeItem('user');
@@ -33,8 +22,18 @@ function Profile({ history }) {
   };
 
   useEffect(() => {
+    const getEmailLocalStorage = () => {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user === null) {
+        setEmail('user@email.com');
+      } else {
+        setEmail(user.email);
+        setUserImage(user.userImg);
+        setUserImg(user.userImg);
+      }
+    };
     getEmailLocalStorage();
-  }, []);
+  }, [setUserImg]);
   return (
     <div className="Profile">
       <div

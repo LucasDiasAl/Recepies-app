@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import {
   FacebookShareButton,
@@ -13,47 +13,39 @@ import Review from '../../Components/Review/setReview/Review';
 
 function DoneRecipes({ history }) {
   const [done, setDone] = useState([]);
-  const [pureData, setpureData] = useState([]);
-  const [haveData, setHaveData] = useState(false);
+  const [pureData, setPureData] = useState([]);
 
-  const checkLoad = () => {
-    if (done !== []) {
-      setHaveData(true);
-    }
-  };
-
-  const getLocalStorage = () => {
-    const data = JSON.parse(localStorage.getItem('doneRecipes'));
-    if (data === null || undefined) {
-      setDone([]);
-      setpureData([]);
-    } else {
-      setDone(data);
-      setpureData(data);
-    }
-    checkLoad();
-  };
   const handleAll = () => {
     setDone(pureData);
   };
+
   const handleMeal = () => {
-    setDone(pureData);
     const filterMeal = pureData.filter((item) => item.type === 'meal');
     setDone(filterMeal);
   };
+
   const handleDrink = () => {
-    const filterMeal = pureData.filter((item) => item.type === 'drink');
-    setDone(filterMeal);
+    const filterDrink = pureData.filter((item) => item.type === 'drink');
+    setDone(filterDrink);
   };
 
-  useEffect(() => {
-    getLocalStorage();
-    checkLoad();
-  }, []);
+  const haveData = useMemo(() => done.length !== 0, [done]);
 
   useEffect(() => {
-    checkLoad();
-  }, [haveData]);
+    const getLocalStorage = () => {
+      const data = JSON.parse(localStorage.getItem('doneRecipes'));
+      if (data === null || data === undefined) {
+        setDone([]);
+        setPureData([]);
+      } else {
+        setDone(data);
+        setPureData(data);
+      }
+    };
+
+    getLocalStorage();
+  }, []);
+
   return (
     <div className="DoneRecipes">
       <Header title="Done Recipes" perfilBool img />

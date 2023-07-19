@@ -11,14 +11,10 @@ function Footer({ showMeals, showDrinks }) {
   const [sMeals, setShowMeals] = useState(false);
   const [sDrinks, setShowDrinks] = useState(false);
 
-  const setShow = () => {
+  useEffect(() => {
     setShowMeals(showMeals);
     setShowDrinks(showDrinks);
-  };
-
-  useEffect(() => {
-    setShow();
-  }, []);
+  }, [showMeals, showDrinks]);
   return (
     <footer
       data-testid="footer"

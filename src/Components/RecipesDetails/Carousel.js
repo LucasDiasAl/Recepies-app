@@ -2,8 +2,14 @@ import PropTypes from 'prop-types';
 import 'swiper/swiper-bundle.min.css';
 import 'swiper/swiper.min.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { useHistory } from 'react-router-dom';
 
 function Carousel({ loading, recomendation, recomendationP, keys }) {
+  const history = useHistory();
+  const handleRecomendationClick = (id) => {
+    // Use o método push para navegar para uma nova rota
+    history.push(`/${recomendationP}s/${id}`.toLowerCase());
+  };
   return (
     <section className="carousel">
       <h1 className="Carousel-Sugestion-title">
@@ -30,6 +36,7 @@ function Carousel({ loading, recomendation, recomendationP, keys }) {
               data-testid={ `${index}-recommendation-card` }
               className="card"
               key={ `${index}-${recomend[`id${recomendationP}`]}` }
+              onClick={ () => handleRecomendationClick(recomend[`id${recomendationP}`]) }
             >
               <h1 data-testid={ `${index}-recommendation-title` }>
                 {recomend[`str${keys}`]}
