@@ -1,32 +1,32 @@
 import React from 'react';
-import { screen, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import renderWithRouter from './renderWithRouter';
 import Provider from '../Context/Context';
-import { Meals } from '../Pages';
 
 describe('Profile page tests', () => {
-  test('Test if icon profile is showed', () => {
+  const profilePath = '/profile';
+  test('Test if icon profile is showed', async () => {
     renderWithRouter(
       <Provider>
-        <Meals />
+        <App />
       </Provider>,
-      ['/profile'],
+      { route: '/meals' },
     );
-    const perfilIcon = screen.getByTestId('profile-top-btn');
+    const perfilIcon = await screen.findByTestId('profile-top-btn');
     expect(perfilIcon).toBeInTheDocument();
   });
 
-  test('Test if name `Profile` is showed', () => {
+  test('Test if name `Profile` is showed', async () => {
     renderWithRouter(
       <Provider>
-        <Meals />
+        <App />
       </Provider>,
-      ['/profile'],
+      { route: profilePath },
     );
-    const profileText = screen.getByTestId('page-title');
-    expect(profileText).toBeInTheDocument();
+    const perfilImg = await screen.findByAltText('profile-pic');
+    expect(perfilImg).toBeInTheDocument();
   });
 
   test('Test if email is showed', () => {
@@ -34,7 +34,7 @@ describe('Profile page tests', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/profile'],
+      { route: profilePath },
     );
     const userEmail = screen.getByTestId('profile-email');
     expect(userEmail).toBeInTheDocument();
@@ -45,7 +45,7 @@ describe('Profile page tests', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/profile'],
+      { route: profilePath },
     );
     const btnDoneRecipes = screen.getByTestId('profile-done-btn');
     expect(btnDoneRecipes).toBeInTheDocument();
@@ -56,7 +56,7 @@ describe('Profile page tests', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/profile'],
+      { route: profilePath },
     );
     const btnFavoriteRecipes = screen.getByTestId('profile-favorite-btn');
     expect(btnFavoriteRecipes).toBeInTheDocument();
@@ -67,7 +67,7 @@ describe('Profile page tests', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/profile'],
+      { route: profilePath },
     );
     const btnLogout = screen.getByTestId('profile-logout-btn');
     expect(btnLogout).toBeInTheDocument();
@@ -78,63 +78,57 @@ describe('Profile page tests', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/profile'],
+      { route: profilePath },
     );
     const userEmail = screen.getByText(/\S+@\S+\.\S+/);
     expect(userEmail).toBeInTheDocument();
   });
 
   test('Test if when clicked in `Done Recipes` the route is changed', async () => {
-    const { history } = renderWithRouter(
+    renderWithRouter(
       <Provider>
         <App />
       </Provider>,
-      ['/profile'],
+      { route: profilePath },
     );
     const btnDoneRecipes = screen.getByTestId('profile-done-btn');
     userEvent.click(btnDoneRecipes);
-    await waitFor(() => {
-      const { pathname } = history.location;
-      expect(pathname).toBe('/done-recipes');
-    });
+    const noRecipestext = await screen.findByText('Done Recipes');
+    expect(noRecipestext).toBeInTheDocument();
   });
 
   test('Test if when clicked in `Favorite Recipes` the route is changed', async () => {
-    const { history } = renderWithRouter(
+    renderWithRouter(
       <Provider>
         <App />
       </Provider>,
-      ['/profile'],
+      { route: profilePath },
     );
     const btnFavoriteRecipes = screen.getByTestId('profile-favorite-btn');
     userEvent.click(btnFavoriteRecipes);
-    await waitFor(() => {
-      const { pathname } = history.location;
-      expect(pathname).toBe('/favorite-recipes');
-    });
+
+    const noRecipestext = await screen.findByText('Favorite Recipes');
+    expect(noRecipestext).toBeInTheDocument();
   });
 
   test('Test if when clicked in `Logout` the route is changed', async () => {
-    const { history } = renderWithRouter(
+    renderWithRouter(
       <Provider>
         <App />
       </Provider>,
-      ['/profile'],
+      { route: profilePath },
     );
     const btnLogout = screen.getByTestId('profile-logout-btn');
     userEvent.click(btnLogout);
-    await waitFor(() => {
-      const { pathname } = history.location;
-      expect(pathname).toBe('/');
-    });
+    const emailInput = await screen.findByTestId('email-input');
+    expect(emailInput).toBeInTheDocument();
   });
 
   test('Test if email is right', async () => {
-    const { history } = renderWithRouter(
+    renderWithRouter(
       <Provider>
         <App />
       </Provider>,
-      ['/'],
     );
     const emailInput = screen.getByTestId('email-input');
     const passwordInput = screen.getByTestId('password-input');
@@ -146,13 +140,11 @@ describe('Profile page tests', () => {
     userEvent.type(passwordInput, '123456A');
     userEvent.click(btnLogin);
     setTimeout(() => {
-      const { pathname } = history.location;
-      expect(pathname).toBe('/meals');
       renderWithRouter(
         <Provider>
           <App />
         </Provider>,
-        ['/profile'],
+        { route: profilePath },
       );
       const email = screen.getByTestId('profile-email');
       expect(email).toHaveTextContent('teste@gmail.com');

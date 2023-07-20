@@ -5,8 +5,8 @@ import Provider from '../Context/Context';
 import renderWithRouter from './renderWithRouter';
 
 describe('Login page tests', () => {
-  test('Test if login is sucefull', () => {
-    const { history } = renderWithRouter(
+  test('Test if login is sucefull', async () => {
+    renderWithRouter(
       <Provider>
         <App />
       </Provider>,
@@ -24,9 +24,7 @@ describe('Login page tests', () => {
       userEvent.type(passwordInput, '123456A');
       userEvent.click(btnLogin);
     });
-    setTimeout(() => {
-      const { pathname } = history.location;
-      expect(pathname).toBe('/meals');
-    }, 100);
+    const mealsTitle = await screen.findByTestId('page-title');
+    expect(mealsTitle).toBeInTheDocument();
   });
 });

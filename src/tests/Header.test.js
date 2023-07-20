@@ -1,7 +1,6 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Meals } from '../Pages';
 import renderWithRouter from './renderWithRouter';
 import Provider from '../Context/Context';
 import App from '../App';
@@ -9,11 +8,12 @@ import App from '../App';
 const searchButton = 'search-top-btn';
 
 describe('Header component tests', () => {
-  test('Test Header is render and changes to route profile', () => {
-    const { history } = renderWithRouter(
+  test('Test Header is render and changes to route profile', async () => {
+    renderWithRouter(
       <Provider>
-        <Meals />
+        <App />
       </Provider>,
+      { route: '/meals' },
     );
 
     const profileLink = screen.getByTestId('profile-top-btn');
@@ -27,15 +27,22 @@ describe('Header component tests', () => {
     expect(searchInput).toBeInTheDocument();
 
     userEvent.click(profileLink);
-    const { pathname } = history.location;
-    expect(pathname).toBe('/profile');
+    const logoutText = await screen.findByText('Logout');
+    expect(logoutText).toBeInTheDocument();
+
+    const doneRecipesText = await screen.findByText('Done Recipes');
+    expect(doneRecipesText).toBeInTheDocument();
+
+    const favoriteRecipesText = await screen.findByText('Favorite Recipes');
+    expect(favoriteRecipesText).toBeInTheDocument();
   });
 
   test('Test Header is render and click on search creates input-search', async () => {
     renderWithRouter(
       <Provider>
-        <Meals />
+        <App />
       </Provider>,
+      { route: '/meals' },
     );
 
     const profileLink = screen.getByTestId('profile-top-btn');
@@ -76,7 +83,7 @@ describe('Header component tests', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/drinks'],
+      { route: '/drinks' },
     );
     const search = screen.getByTestId(searchButton);
     expect(search).toBeInTheDocument();

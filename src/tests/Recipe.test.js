@@ -12,11 +12,11 @@ const searchButton = 'search-top-btn';
 
 describe('RecipeDetails page tests', () => {
   test('Test if only 1 element is called goes to page details`', async () => {
-    const { history } = renderWithRouter(
+    renderWithRouter(
       <Provider>
         <App />
       </Provider>,
-      ['/meals'],
+      { route: '/meals' },
     );
     const searchBtn = screen.getByTestId('search-top-btn');
     userEvent.click(searchBtn);
@@ -28,17 +28,15 @@ describe('RecipeDetails page tests', () => {
     userEvent.type(searchInput, 'Arrabiata');
     userEvent.click(btnCall);
 
-    await waitFor(() => {
-      const { pathname } = history.location;
-      expect(pathname).toBe('/meals/52771');
-    });
+    const recipeTitle = await screen.findByText('Spicy Arrabiata Penne');
+    expect(recipeTitle).toBeInTheDocument();
   });
   test('Test if only 1 element is called goes to page details`', async () => {
-    const { history } = renderWithRouter(
+    renderWithRouter(
       <Provider>
         <App />
       </Provider>,
-      ['/meals'],
+      { route: '/meals' },
     );
     const firstElement = await screen.findByTestId(
       '0-recipe-card',
@@ -48,17 +46,16 @@ describe('RecipeDetails page tests', () => {
     expect(firstElement).toBeInTheDocument();
 
     userEvent.click(firstElement);
-    await waitFor(() => {
-      const { pathname } = history.location;
-      expect(pathname).toBe('/meals/52977');
-    });
+
+    const recipeTitle = await screen.findByText('Corba');
+    expect(recipeTitle).toBeInTheDocument();
   });
   test('Test if drinks route is render with key Drink', async () => {
     renderWithRouter(
       <Provider>
         <App />
       </Provider>,
-      ['/drinks'],
+      { route: '/meals' },
     );
     const divDrinks = await screen.findByTestId(
       'Recipe__container-cards',
@@ -73,7 +70,7 @@ describe('RecipeDetails page tests', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/meals'],
+      { route: '/meals' },
     );
     const divMeals = await screen.findByTestId(
       'Recipe__container-cards',
@@ -84,12 +81,12 @@ describe('RecipeDetails page tests', () => {
   });
 });
 
-test('Test if only 1 elment send to right page id', async () => {
-  const { history } = renderWithRouter(
+test('Test if no recipes is found it remains on the meals page', async () => {
+  renderWithRouter(
     <Provider>
       <App />
     </Provider>,
-    ['/drinks'],
+    { route: '/meals' },
   );
   const searchBtn = screen.getByTestId(searchButton);
   userEvent.click(searchBtn);
@@ -101,60 +98,52 @@ test('Test if only 1 elment send to right page id', async () => {
   userEvent.type(searchInput, 'Aquamarine');
   userEvent.click(btnCall);
 
-  await waitFor(() => {
-    const { pathname } = history.location;
-    expect(pathname).toBe('/drinks/178319');
-    const title = screen.getByTestId('recipe-title');
-    expect(title).toBeInTheDocument();
-  });
+  const title = await screen.findByTestId('page-title');
+  expect(title).toBeInTheDocument();
+  expect(title.innerHTML).toBe('Meals');
 });
 
-test('Test if sends to in pogress', async () => {
-  const { history } = renderWithRouter(
+test('Test if sends to in progress for drinks', async () => {
+  renderWithRouter(
     <Provider>
       <App />
     </Provider>,
-    [drinksURl],
+    { route: drinksURl },
   );
   const start = screen.getByTestId(startRecipe);
   userEvent.click(start);
-  await waitFor(() => {
-    const { pathname } = history.location;
-    expect(pathname).toBe('/drinks/15997/in-progress');
-  });
+
+  const firstStep = await screen.findByLabelText('Galliano2 1/2 shots');
+  expect(firstStep).toBeInTheDocument();
 });
 
-test('Test if sends to in pogress', async () => {
-  const { history } = renderWithRouter(
+test('Test if sends to in progress for meals', async () => {
+  renderWithRouter(
     <Provider>
       <App />
     </Provider>,
-    ['/meals/52977'],
+    { route: '/meals/52977' },
   );
   const start = screen.getByTestId(startRecipe);
   userEvent.click(start);
-  await waitFor(() => {
-    const { pathname } = history.location;
-    expect(pathname).toBe('/meals/52977/in-progress');
-  });
+
+  const firstStep = await screen.findByLabelText('Lentils1 cup');
+  expect(firstStep).toBeInTheDocument();
 });
 
 describe('testa os componentes da tela de ingredientes', () => {
   test('testa se o ingredientes aparecem da forma correta', async () => {
-    const { history } = renderWithRouter(
+    renderWithRouter(
       <Provider>
         <App />
       </Provider>,
-      ['/drinks'],
+      { route: '/drinks' },
     );
     const firstElement = await screen.findByTestId('0-recipe-card');
     expect(firstElement).toBeInTheDocument();
 
     userEvent.click(firstElement);
-    await waitFor(() => {
-      const { pathname } = history.location;
-      expect(pathname).toBe(drinksURl);
-    });
+
     const instruction = await screen.findByTestId(
       '0-ingredient-name-and-measure',
     );
@@ -162,51 +151,16 @@ describe('testa os componentes da tela de ingredientes', () => {
 
     expect(instruction.innerHTML).toBe('Galliano - 2 1/2 shots ');
   });
-  // test('testa se o link é copiado ao clicar no botao de copiar ', async () => {
-  //   renderWithRouter(
-  //     <Provider>
-  //       <App />
-  //     </Provider>,
-  //     [drinksURl],
-  //   );
-
-  //   const copiarBtn = await screen.findByTestId('share-btn');
-  //   expect(copiarBtn).toBeInTheDocument();
-
-  //   userEvent.click(copiarBtn);
-
-  //   const copiarText = await screen.findByText('Link copied!');
-  //   expect(copiarText).toBeInTheDocument();
-  // });
-
-  test('testa se ao clicar no botao de start recipe é redirecionando para a pagina de in progress', async () => {
-    const { history } = renderWithRouter(
-      <Provider>
-        <App />
-      </Provider>,
-      [drinksURl],
-    );
-    const iniciarBtn = await screen.findByTestId(startRecipe);
-    expect(iniciarBtn).toBeInTheDocument();
-
-    userEvent.click(iniciarBtn);
-
-    await waitFor(() => {
-      const { pathname } = history.location;
-      expect(pathname).toBe('/drinks/15997/in-progress');
-    });
-  });
   test('testa se o carousel de recomendacoes existe', async () => {
     renderWithRouter(
       <Provider>
         <App />
       </Provider>,
-      [drinksURl],
+      { route: drinksURl },
     );
-    setTimeout(() => {
-      const recomendation = screen.findByTestId('0-recommendation-card');
-      expect(recomendation).toBeInTheDocument();
-    }, 100);
+
+    const recomendation = await screen.findByTestId('0-recommendation-card');
+    expect(recomendation).toBeInTheDocument();
   });
 
   test('testa se o localStorage funciona', async () => {
@@ -214,20 +168,11 @@ describe('testa os componentes da tela de ingredientes', () => {
       <Provider>
         <App />
       </Provider>,
-      ['/meals/52771'],
+      { route: '/meals/52771' },
     );
     localStorage.clear();
     const favoriteBtn = await screen.findByTestId('favorite-btn');
     userEvent.click(favoriteBtn);
-    // const favorite = [{
-    //   id: 15997,
-    //   type: 'drink',
-    //   nationality: '',
-    //   category: 'Ordinary Drink',
-    //   alcoholicOrNot: 'Optional alcohol',
-    //   name: 'GG',
-    //   image: 'https://www.thecocktaildb.com/images/media/drink/vyxwut1468875960.jpg',
-    // }];
     await waitFor(() => {
       const getLocalStorage = JSON.parse(
         localStorage.getItem('favoriteRecipes'),

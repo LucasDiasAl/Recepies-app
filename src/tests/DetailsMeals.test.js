@@ -7,47 +7,29 @@ import renderWithRouter from './renderWithRouter';
 
 describe('Test page Details Drinks', () => {
   it('Test if route `/meals` is rendered', async () => {
-    const { history } = renderWithRouter(
+    renderWithRouter(
       <Provider>
         <App />
       </Provider>,
-      ['/meals'],
+      { route: '/meals' },
     );
     await waitFor(() => {
-      const { pathname } = history.location;
-      expect(pathname).toBe('/meals');
-    });
-    // const firstElement = screen.getByTestId('0-recipe-card');
-    // expect(firstElement).toBeInTheDocument();
-  });
-
-  it('Test if `RecipeDetails` is rendered', async () => {
-    const { history } = renderWithRouter(
-      <Provider>
-        <App />
-      </Provider>,
-      ['/meals'],
-    );
-    await waitFor(() => {
-      const { pathname } = history.location;
-      expect(pathname).toBe('/meals');
       const firstElement = screen.getByTestId('0-recipe-card');
       expect(firstElement).toBeInTheDocument();
     }, 100);
   });
 
-  it('Test if route `/recipe-details` is changed when click in element', async () => {
-    const { history } = renderWithRouter(
+  it('Test if `RecipeDetails` is rendered by clicking on a recepie', async () => {
+    renderWithRouter(
       <Provider>
         <App />
       </Provider>,
-      ['/meals'],
+      { route: '/meals' },
     );
     const firstElement = await screen.findByTestId('0-recipe-card');
     userEvent.click(firstElement);
-    await waitFor(() => {
-      const { pathname } = history.location;
-      expect(pathname).toBe('/meals/52977');
-    });
+
+    const firstIngridient = await screen.findByText('Lentils - 1 cup');
+    expect(firstIngridient).toBeInTheDocument();
   });
 });

@@ -1,9 +1,11 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { DoneRecipes, Drinks, Meals } from '../Pages';
+import { act } from 'react-dom/test-utils';
+import { DoneRecipes } from '../Pages';
 import renderWithRouter from './renderWithRouter';
 import Provider from '../Context/Context';
+import App from '../App';
 
 describe('Footer component tests', () => {
   test('Test if footer component and icons are rendered', () => {
@@ -19,29 +21,35 @@ describe('Footer component tests', () => {
     expect(drinksIcon).toBeInTheDocument();
   });
 
-  test('Test if route is changed when click on link `Meals`', () => {
-    const { history } = renderWithRouter(
+  test('Test if route is changed when click on link `Meals`', async () => {
+    renderWithRouter(
       <Provider>
-        <Drinks />
+        <App />
       </Provider>,
+      { route: '/drinks' },
     );
     const mealsIcon = screen.getByTestId('meals-bottom-btn');
-    userEvent.click(mealsIcon);
+    expect(mealsIcon).toBeInTheDocument();
 
-    const { pathname } = history.location;
-    expect(pathname).toBe('/meals');
+    act(() => {
+      userEvent.click(mealsIcon);
+    });
+
+    const firstCard = await screen.findByTestId('0-card-name');
+    expect(firstCard.innerHTML).toBe('Corba');
   });
 
-  test('Test if route is changed when click on link `Drinks`', () => {
-    const { history } = renderWithRouter(
+  test('Test if route is changed when click on link `Drinks`', async () => {
+    renderWithRouter(
       <Provider>
-        <Meals />
+        <App />
       </Provider>,
+      { route: '/meals' },
     );
     const drinksIcon = screen.getByTestId('drinks-bottom-btn');
     userEvent.click(drinksIcon);
 
-    const { pathname } = history.location;
-    expect(pathname).toBe('/drinks');
+    const firstCard = await screen.findByTestId('0-card-name');
+    expect(firstCard.innerHTML).toBe('GG');
   });
 });

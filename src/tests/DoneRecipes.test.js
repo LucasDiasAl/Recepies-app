@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import App from '../App';
@@ -33,51 +33,37 @@ const dataMock = [
 ];
 
 describe('Done Recipes page tests', () => {
-  test('Test if pathname `/done-recipes 12` exists', async () => {
-    const { history } = renderWithRouter(
-      <Provider>
-        <App />
-      </Provider>,
-      ['/profile'],
-    );
-    const btnDoneRecipes = screen.getByTestId('profile-done-btn');
-    userEvent.click(btnDoneRecipes);
-    await waitFor(() => {
-      const { pathname } = history.location;
-      expect(pathname).toBe(pathRecipes);
-    });
-  });
-
-  test('Test if text `Done Recipes` is rendered 1', () => {
+  test('Test if pathname `/done-recipes` exists', async () => {
     renderWithRouter(
       <Provider>
         <App />
       </Provider>,
-      [pathRecipes],
+      { route: '/profile' },
     );
-    const doneRecipesText = screen.getByRole('heading', {
-      name: /done recipes/i,
-    });
-    expect(doneRecipesText).toBeInTheDocument();
+    const btnDoneRecipes = screen.getByTestId('profile-done-btn');
+    userEvent.click(btnDoneRecipes);
+
+    const title = screen.getByTestId('page-title');
+    expect(title.innerHTML).toBe('Done Recipes');
   });
 
   test('Test if text `Done Recipes` is rendered 2', async () => {
     localStorage.setItem('doneRecipes', JSON.stringify(dataMock));
-    const { history } = renderWithRouter(
+    renderWithRouter(
       <Provider>
         <App />
       </Provider>,
-      [pathRecipes],
+      { route: pathRecipes },
     );
-    const title = screen.getByTestId('page-title');
-    const allBtn = screen.getByTestId('filter-by-all-btn');
-    const mealBtn = screen.getByTestId('filter-by-meal-btn');
-    const drinkBtn = screen.getByTestId('filter-by-drink-btn');
-    const image1 = screen.getByTestId('0-horizontal-image');
-    const text = screen.getByTestId('0-horizontal-top-text');
-    const name = screen.getByTestId('0-horizontal-name');
-    const date = screen.getByTestId('0-horizontal-done-date');
-    const tags = screen.getByTestId('0-Pasta-horizontal-tag');
+    const title = await screen.findByTestId('page-title');
+    const allBtn = await screen.findByTestId('filter-by-all-btn');
+    const mealBtn = await screen.findByTestId('filter-by-meal-btn');
+    const drinkBtn = await screen.findByTestId('filter-by-drink-btn');
+    const image1 = await screen.findByTestId('0-horizontal-image');
+    const text = await screen.findByTestId('0-horizontal-top-text');
+    const name = await screen.findByTestId('0-horizontal-name');
+    const date = await screen.findByTestId('0-horizontal-done-date');
+    const tags = await screen.findByTestId('0-Pasta-horizontal-tag');
 
     expect(title).toBeInTheDocument();
     expect(allBtn).toBeInTheDocument();
@@ -93,37 +79,33 @@ describe('Done Recipes page tests', () => {
     expect(name.id).toBe('Spicy Arrabiata Penne');
     userEvent.click(image1);
 
-    await waitFor(() => {
-      const { pathname } = history.location;
-      expect(pathname).toBe('/meals/52771');
-    });
+    const recipeCategory = await screen.findByText('Category: Vegetarian');
+    expect(recipeCategory).toBeInTheDocument();
   });
 
   test('Test if text `Done Recipes` is rendered', async () => {
     localStorage.setItem('doneRecipes', JSON.stringify(dataMock));
-    const { history } = renderWithRouter(
+    renderWithRouter(
       <Provider>
         <App />
       </Provider>,
-      [pathRecipes],
+      { route: pathRecipes },
     );
     const name = screen.getByTestId(pathHorizontal);
     expect(name).toBeInTheDocument();
     userEvent.click(name);
 
-    await waitFor(() => {
-      const { pathname } = history.location;
-      expect(pathname).toBe('/meals/52771');
-    });
+    const recipeCategory = await screen.findByText('Category: Vegetarian');
+    expect(recipeCategory).toBeInTheDocument();
   });
 
   test('Test if text `Done Recipes` is rendered', async () => {
     localStorage.setItem('doneRecipes', JSON.stringify(dataMock));
-    const { history } = renderWithRouter(
+    renderWithRouter(
       <Provider>
         <App />
       </Provider>,
-      [pathRecipes],
+      { route: pathRecipes },
     );
     const drinkBtn = screen.getByTestId('filter-by-drink-btn');
     const name = screen.getByTestId(pathHorizontal);
@@ -137,7 +119,5 @@ describe('Done Recipes page tests', () => {
     userEvent.click(image1);
     const alcool = await screen.findByText(/Alcoholic/i, {}, { timeout: 4000 });
     expect(alcool).toBeInTheDocument();
-    const { pathname } = history.location;
-    expect(pathname).toBe('/drinks/178319');
   });
 });
