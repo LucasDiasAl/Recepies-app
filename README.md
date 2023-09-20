@@ -1,4 +1,4 @@
-# Nome do projeto
+# Recepies-App
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/LucasDiasAl/Recepies-app?style=for-the-badge)
 ![GitHub language count](https://img.shields.io/github/languages/count/LucasDiasAl/Recepies-app?style=for-the-badge)
