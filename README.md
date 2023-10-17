@@ -2,7 +2,6 @@
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/LucasDiasAl/Recepies-app?style=for-the-badge)
 ![GitHub language count](https://img.shields.io/github/languages/count/LucasDiasAl/Recepies-app?style=for-the-badge)
-![GitHub forks](https://img.shields.io/github/forks/LucasDiasAl/Recepies-app?style=for-the-badge)
 
 > Projeto em grupo feito durante o curso da Trybe. Consiste em um app em que é possível escolher receitas e bebidas,
 > assim como favoritá-las e acompanhar o seu progresso. 
